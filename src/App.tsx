@@ -1,24 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {useEffect,useState} from 'react';
+
 
 function App() {
+  const[value,setValue]=useState(0)
+  const[factorial,setFactorial]=useState(0)
+
+  useEffect(function(){//chama quando renderizar o componente
+    console.log('executando sem []')
+  })
+
+  useEffect(function(){//chama na primeira renderizacao
+    console.log('executando com []')
+  },[])
+
+  useEffect(function(){//chama quando alterar value
+    console.log('monitorando value')
+    let temp=1;
+    for(let v=value;v>0;v--){
+      temp=temp*v;
+    }
+    setFactorial(temp)
+  },[value])
+
+  
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+       <input value={value} onChange={event=>setValue(+event.target.value)}></input>
+       <p>{factorial}</p>
     </div>
   );
 }
